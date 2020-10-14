@@ -1,0 +1,49 @@
+extends ./layouts/common
+
+block content
+	.row
+		.col-xl-2
+			h1 ONLINE
+			ul#user.list-group
+				each user in users
+					li.list-group-item.list-group-item-action=user
+			h1 CHAT!!!
+			ul#thread.list-group
+		.col-xl-8
+			h1  Caro
+			span ROOM:
+			span#roomname ...
+			div
+				p=ip
+				p=id
+			div#result 
+			form
+				input#message(type='text', placeholder='message')
+				input(type='submit', value='Send')
+			each i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+				.row
+					each j in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+						button.btn-lg.btn-info.caroplay.col(style="padding:1px;")
+		.col-xl-2
+			h1 ROOMs
+			table.table.table-striped.table-bordered.table-hover#roomlist
+				tr.text-center
+					th
+						button.btn.btn-primary#create
+							svg.bi.bi-plus-square-fill(width='1em', height='1em', viewbox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+								path(fill-rule='evenodd', d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z')
+					th
+						button.btn.btn-primary#delete
+							svg.bi.bi-dash-square-fill(width='1em', height='1em', viewbox='0 0 16 16', fill='currentColor', xmlns='http://www.w3.org/2000/svg')
+								path(fill-rule='evenodd', d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm2.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z')
+				tr.text-center
+					td(colspan="2")
+						button.btn.btn-danger#leaveroom Leave Room
+	div.lightbox.text-center
+		div#reset
+			h1#result2
+			button.btn.btn-primary#playagain PLAY AGAIN
+			button.btn.btn-danger#leaveroom2 LEAVE				
+	script(src='https://code.jquery.com/jquery-3.1.1.min.js')
+	script(src='/socket.io/socket.io.js?p=ip')
+	script(src='../js/client.js')
