@@ -44,11 +44,7 @@ data_server.on('connect', function() {
 
 data_server.set('numofroom','0',function(err, reply){
 });
-// data_server.smembers('users',function(err,object){
-//     console.log(object);
-//     let usersl = [...object];
-//     console.log(usersl,typeof(userslist),typeof(usersl));
-// });
+
 
 'use strict';
 
@@ -77,15 +73,9 @@ app.set('views','./public/views');
 
 app.get('/', function (req, res, next) {
     var id = shortid.generate();
-    userslist.push(id);
-    data_server.sadd('userslist',id,function(err,reply){
-        data_server.smembers('userslist',function(err,userslist){
-            data_server.get('numofroom',function(err,numofroom){
-                res.render("index",{ip:results['Wi-Fi'][0],id:id,users:userslist,numr:numofroom});
-            });
-        });
-    });
-    
+
+    res.render("index",{ip:results['Wi-Fi'][0],numr:numofroom});
+
 });
 
 app.use(express.static('public'));
@@ -95,9 +85,14 @@ io.on('connection', function (client) {
     console.log('Client connected...'+ client.id+` in process: ${process.pid}`);
     client.on('join', function (data) {
         console.log(data);
-        //client.emit('users',data);
         id_client = data;
-        client.broadcast.emit('users',data);
+
+        data_server.sadd('userslist',data,function(err,reply){
+            data_server.smembers('userslist',function(err,userslist){
+                io.emit('disconnected',userslist);
+            });
+        });
+
         data_server.get('numofroom',function(err,reply){
             io.to(client.id).emit("numofroom",reply);
             console.log("Has ",reply," rooms");

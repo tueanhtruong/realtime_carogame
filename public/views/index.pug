@@ -5,8 +5,9 @@ block content
 		.col-xl-2
 			h1 ONLINE
 			ul#user.list-group
-				each user in users
-					li.list-group-item.list-group-item-action=user
+				if users
+					each user in users
+						li.list-group-item.list-group-item-action=user
 			h1 CHAT!!!
 			ul#thread.list-group
 		.col-xl-8
@@ -15,11 +16,10 @@ block content
 			span#roomname ...
 			div
 				p=ip
-				p=id
 			div#result 
-			form
-				input#message(type='text', placeholder='message')
-				input(type='submit', value='Send')
+			form.form-group.row
+				input#message(type='text', placeholder='message').form-control.col-sm-10
+				input(type='submit', value='Send').form-control.col-sm-2
 			each i in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 				.row
 					each j in [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]

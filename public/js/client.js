@@ -1,11 +1,12 @@
+var person = prompt("Please enter your name", "Harry Potter");
 var x=document.getElementsByTagName("p")[0].innerText;
-var y=document.getElementsByTagName("p")[1].innerText;
 var roomnum = 0;
 var icon ="";
 var socket = io.connect('http://'+x+':2512');
 document.getElementsByTagName("p")[0].innerText="";
 socket.on('connect', function (data) {
-    socket.emit('join',y);
+    socket.emit('join',person);
+    $('#user-name').html(person);
 });
 //listen event
 //tao ban co
@@ -283,6 +284,6 @@ socket.on('disconnected', function(data){
 	let i = $('#user');
 	i.empty();
 	data.forEach(n=>{
-		i.append('<li>' + n + '</li>');
+		i.append('<li class="list-group-item list-group-item-action">' + n + '</li>');
 	});
 });
